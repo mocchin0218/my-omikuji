@@ -11,18 +11,27 @@
 </head>
 <body>
   <h1>今日の運勢は？</h1>
+
+  <!-- ボタン -->
   <button onclick="drawOmikuji()">おみくじを引く！</button>
+
+  <!-- 結果を表示する場所 -->
   <div id="result"></div>
 
+  <!-- JavaScript（GET送信バージョン） -->
   <script>
     const results = ["大吉", "中吉", "小吉", "吉", "凶"];
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbzpZjr5QLBoWo52MtGMbzjy8cmYyIUE6maRy3gh-siJn9--qvB6z8gaBovSZXpMtEte/exec"; // 例: https://script.google.com/macros/s/XXXXX/exec
+
+    // ★ここにGASのURLを貼り付けてね！（doGetでデプロイしたURL）
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyJU-2qaKD7yULJ2MwVo-MtyGSe1953I7ga0oPN5L93Ew8qBgZR-Xjg4u9eMUvUJdk/exec";
 
     function drawOmikuji() {
       const result = results[Math.floor(Math.random() * results.length)];
       document.getElementById("result").textContent = result;
 
-      fetch(`${GAS_URL}?result=${encodeURIComponent(result)}`)
+      // スプレッドシートに送信（GETリクエスト）
+      const url = GAS_URL + "?result=" + encodeURIComponent(result);
+      fetch(url)
         .then(res => res.text())
         .then(data => console.log("送信完了:", data))
         .catch(err => console.error("エラー:", err));
