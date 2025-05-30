@@ -18,18 +18,24 @@
   <!-- 結果を表示する場所 -->
   <div id="result"></div>
 
+  <!-- JavaScript（新しいスクリプト） -->
   <script>
-    // おみくじの内容を配列で用意
-    const results = ["大吉", "中吉", "小吉", "吉", "末吉", "凶", "大凶"];
+    const results = ["大吉", "中吉", "小吉", "吉", "凶"];
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbx98yy1QhWSQWCAxZDIgmhXiM1u00IYzlw8yWxFjQGTuErTUwQmg-MwswpLbXygcLKh/exec";
 
-    // ボタンを押したときに呼び出される関数
     function drawOmikuji() {
-      // 0～配列の長さまでのランダムな数字を出す
-      const index = Math.floor(Math.random() * results.length);
-      const result = results[index];
-
-      // 結果を画面に表示
+      const result = results[Math.floor(Math.random() * results.length)];
       document.getElementById("result").textContent = result;
+
+      // スプレッドシートに送信
+      fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({ result: result }),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => res.text())
+      .then(data => console.log("送信完了:", data))
+      .catch(err => console.error("エラー:", err));
     }
   </script>
 </body>
