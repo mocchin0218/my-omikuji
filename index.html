@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>おみくじ</title>
+  <style>
+    body { text-align: center; font-family: sans-serif; padding-top: 100px; }
+    button { font-size: 24px; padding: 10px 20px; }
+    #result { margin-top: 30px; font-size: 32px; color: crimson; }
+  </style>
+</head>
+<body>
+  <h1>今日の運勢は？</h1>
+
+  <!-- ボタン -->
+  <button onclick="drawOmikuji()">おみくじを引く！</button>
+
+  <!-- 結果を表示する場所 -->
+  <div id="result"></div>
+
+  <script>
+    // おみくじの内容を配列で用意
+    const results = ["大吉", "中吉", "小吉", "吉", "末吉", "凶", "大凶"];
+
+    // ボタンを押したときに呼び出される関数
+    function drawOmikuji() {
+      // 0～配列の長さまでのランダムな数字を出す
+      const index = Math.floor(Math.random() * results.length);
+      const result = results[index];
+
+      // 結果を画面に表示
+      document.getElementById("result").textContent = result;
+    }
+  </script>
+</body>
+</html>
