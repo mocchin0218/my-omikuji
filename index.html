@@ -11,31 +11,21 @@
 </head>
 <body>
   <h1>今日の運勢は？</h1>
-
-  <!-- ボタン -->
   <button onclick="drawOmikuji()">おみくじを引く！</button>
-
-  <!-- 結果を表示する場所 -->
   <div id="result"></div>
 
-  <!-- JavaScript（新しいスクリプト） -->
   <script>
     const results = ["大吉", "中吉", "小吉", "吉", "凶"];
-    const GAS_URL = "https://script.google.com/macros/s/AKfycby7zSFYSUvMWvgUZKi2Dz3oXKzNtX1l7biMcBO6Vi67TRup6GR0R9xquCKckVYbQG5l/exec";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzpZjr5QLBoWo52MtGMbzjy8cmYyIUE6maRy3gh-siJn9--qvB6z8gaBovSZXpMtEte/exec"; // 例: https://script.google.com/macros/s/XXXXX/exec
 
     function drawOmikuji() {
       const result = results[Math.floor(Math.random() * results.length)];
       document.getElementById("result").textContent = result;
 
-      // スプレッドシートに送信
-      fetch(GAS_URL, {
-        method: "POST",
-        body: JSON.stringify({ result: result }),
-        headers: { "Content-Type": "application/json" }
-      })
-      .then(res => res.text())
-      .then(data => console.log("送信完了:", data))
-      .catch(err => console.error("エラー:", err));
+      fetch(`${GAS_URL}?result=${encodeURIComponent(result)}`)
+        .then(res => res.text())
+        .then(data => console.log("送信完了:", data))
+        .catch(err => console.error("エラー:", err));
     }
   </script>
 </body>
